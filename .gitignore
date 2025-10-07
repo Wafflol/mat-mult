@@ -1,0 +1,65 @@
+# ----------------------
+# ModelSim / QuestaSim
+# ----------------------
+# Compiled simulation files
+*.o
+*.so
+*.dll
+*.exe
+*.wlf
+*.vcd
+*.vpd
+*.log
+*.daidir
+*.dai
+*.history
+*.sim
+
+# ModelSim library directories
+work/
+modelsim.ini
+
+# ----------------------
+# Quartus / Intel FPGA
+# ----------------------
+# Compilation outputs
+db/
+incremental_db/
+output_files/
+output_db/
+quartus_sh.tcl
+*.qpf~
+*.qsf~
+*.sof
+*.pof
+*.jic
+*.rpt
+*.htm
+*.csv
+*.txt
+
+# Temporary/backup files
+*.qpf~
+*.qsf~
+*.bak
+*.backup
+*.sdc~
+*.qws
+*.qws~
+*.qar
+*.qar~
+*.qsf
+*.qsf~
+*.qpf
+*.qpf~
+
+# Quartus project cache
+.ipcache/
+.ipcache/*
+
+# ----------------------
+# General
+# ----------------------
+*.sv~
+*.v~
+*.tmp

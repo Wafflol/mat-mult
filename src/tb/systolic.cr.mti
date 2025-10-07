@@ -1,0 +1,10 @@
+/home/tommy/Code/mat-mult/rtl/systolic.sv {2 {vlog -work work -sv -stats=none /home/tommy/Code/mat-mult/rtl/systolic.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module systolic
+** Warning: /home/tommy/Code/mat-mult/rtl/systolic.sv(3): (vlog-13314) Defaulting port 'a_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+** Warning: /home/tommy/Code/mat-mult/rtl/systolic.sv(4): (vlog-13314) Defaulting port 'b_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+
+Top level modules:
+	systolic
+
+} {} {}}
