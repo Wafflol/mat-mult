@@ -1,5 +1,5 @@
-module tb_systolic ();
-    parameter SIZE = 3;
+module tb_1d_systolic ();
+    parameter SIZE = 2;
     parameter IN_WIDTH = 8;
     parameter OUT_WIDTH = 32;
 
@@ -11,8 +11,6 @@ module tb_systolic ();
     logic [OUT_WIDTH-1:0] out [SIZE][SIZE];
 
     systolic #(.SIZE(SIZE)) dut (.*);
-
-    logic test [SIZE][SIZE] = '{'{1, 2, 3}, '{4, 5, 6}, '{7, 8, 9}};
 
     function static void printMat (logic [OUT_WIDTH-1:0] x [SIZE] [SIZE]);
         for (int i = 0; i < SIZE; i++) begin
@@ -27,8 +25,7 @@ module tb_systolic ();
     task static my_checker;
         input logic [OUT_WIDTH] expected_out [0:SIZE-1][0:SIZE-1];
     begin
-        if (dut.out !== expected_out)
-            begin
+        if (dut.out !== expected_out) begin
                 $display("expected output: ");
                 printMat(expected_out);
                 $display("actual output: ");
@@ -41,11 +38,10 @@ module tb_systolic ();
     initial clk = 0;
     always #5 clk = ~clk;
 
-    /* test multiplying two 3x3 matrices */
-    /*   a         b            c
-    * [1 2 3]   [1 2 3]   [30  36  42 ]
-    * [4 5 6] * [4 5 6] = [66  81  96 ]
-    * [7 8 9]   [7 8 9]   [102 126 150]
+    /* test multiplying two 2x2 matrices */
+    /*  a        b           c
+    * [1 2]   [1 2 3]   [30  36  42 ]
+    * [3 4] * [4 5 6] = [66  81  96 ]
     *
     * rows:
     * a1: 1, 2, 3
