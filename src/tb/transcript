@@ -1,7 +1,8 @@
-# 0 compiles, 2 failed with no errors.
 # Compile of mac.sv was successful.
-# Compile of tb_mac.sv failed with 1 errors.
-# 2 compiles, 1 failed with 1 error.
+# 1 compiles, 2 failed with no errors.
 # Compile of mac.sv was successful.
-# Compile of tb_mac.sv was successful.
-# 2 compiles, 0 failed with no errors.
+# 1 compiles, 2 failed with no errors.
+# Compile of mac.sv was successful.
+# Compile of tb_systolic.sv was successful.
+# Compile of systolic.sv was successful with warnings.
+# 3 compiles, 0 failed with no errors.

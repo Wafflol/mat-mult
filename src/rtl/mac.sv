@@ -9,48 +9,34 @@ module mac #(
 );
 
     logic [WIDTH*2-1 : 0] x;
-    logic [WIDTH-1 : 0] a, b;
-    logic valid_a_0, valid_a_1;
-    logic valid_b_0, valid_b_1;
 
-    always_ff @(posedge clk) begin : valid_shift_reg
+    always_comb begin : multiply
+        x = a_in * b_in;
+    end
+
+    always_ff @(posedge clk) begin : valid_reg
         if (~reset) begin
-            valid_a_0   <= 0;
-            valid_a_1   <= 0;
             valid_a_out <= 0;
-
-            valid_b_0   <= 0;
-            valid_b_1   <= 0;
             valid_b_out <= 0;
         end
         else begin
-            valid_a_0   <= valid_a;
-            valid_a_1   <= valid_a_0;
-            valid_a_out <= valid_a_1;
-
-            valid_b_0   <= valid_b;
-            valid_b_1   <= valid_b_0;
-            valid_b_out <= valid_b_1;
+            valid_a_out <= valid_a;
+            valid_b_out <= valid_b;
         end
     end
 
-    always_ff @(posedge clk) begin : pipeline
+    always_ff @(posedge clk) begin : accumulator
         if (~reset) begin
-            a <= 0;
-            b <= 0;
-            x <= 0;
+            a_out   <= 0;
+            b_out   <= 0;
             acc_out <= 0;
         end
         else begin
             if (valid_a && valid_b) begin
-                a <= a_in;
-                b <= b_in;
+                a_out <= a_in;
+                b_out <= b_in;
             end
-
-            if (valid_a_0 && valid_b_0)
-                x <= a * b;
-
-            if (valid_a_1 && valid_b_1)
+            if (valid_a && valid_b)
                 acc_out <= acc_out + x;
         end
     end

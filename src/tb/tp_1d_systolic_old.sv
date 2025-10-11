@@ -1,4 +1,4 @@
-module tb_1d_systolic ();
+module tp_1d_systolic_old ();
     parameter SIZE = 2;
     parameter IN_WIDTH = 8;
     parameter OUT_WIDTH = 32;
@@ -63,27 +63,40 @@ module tb_1d_systolic ();
         b_in = '{1, 0};
         #10;
 
-        my_checker('{'{1, 0}, '{0, 0}});
-        valid_b = '{1, 1};
+        valid_b = '{1, 0};
         a_in = '{2, 0};
-        b_in = '{4, 2};
+        b_in = '{4, 0};
         #10;
 
-        my_checker('{'{9, 2}, '{0, 0}});
         valid_a = '{0, 0};
-        valid_b = '{0, 1};
-        a_in = '{0, 0};
-        b_in = '{0, 5};
-        #10;
-
-        my_checker('{'{9, 12}, '{0, 0}});
-        valid_a = '{default: 0};
-        valid_b = '{default: 0};
+        valid_b = '{0, 0};
         a_in = '{0, 0};
         b_in = '{0, 0};
         #10;
-        #50;
-        printMat(dut.out);
+
+        //data reaches 2nd mac
+        valid_b = '{0, 1};
+        b_in = '{0, 2};
+        my_checker('{'{1, 0}, '{0, 0}});
+        #10;
+
+
+        b_in = '{0, 5};
+        my_checker('{'{9, 0}, '{0, 0}});
+        #10;
+
+        valid_b = '{0, 0};
+        b_in = '{0, 0};
+        my_checker('{'{9, 0}, '{0, 0}});
+        #10;
+
+        my_checker('{'{9, 2}, '{0, 0}});
+        #10;
+
+        my_checker('{'{9, 12}, '{0, 0}});
+        #10;
+
+        #30;
         $stop;
     end
 endmodule

@@ -1,9 +1,9 @@
-/home/tommy/Code/mat-mult/src/tb/tb_systolic.sv {1 {vlog -work work -sv -stats=none /home/tommy/Code/mat-mult/src/tb/tb_systolic.sv
+/home/tommy/Code/mat-mult/src/tb/tb_1d_systolic.sv {1 {vlog -work work -sv -stats=none /home/tommy/Code/mat-mult/src/tb/tb_1d_systolic.sv
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
--- Compiling module tb_systolic
+-- Compiling module tb_1d_systolic
 
 Top level modules:
-	tb_systolic
+	tb_1d_systolic
 
 } {} {}} /home/tommy/Code/mat-mult/src/rtl/mac.sv {1 {vlog -work work -sv -stats=none /home/tommy/Code/mat-mult/src/rtl/mac.sv
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020

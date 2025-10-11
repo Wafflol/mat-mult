@@ -8,9 +8,9 @@ module systolic #(SIZE = 4) (
     );
 
     logic [7:0] a_out [SIZE] [SIZE-1];
-    logic [7:0] valid_a_out [SIZE] [SIZE-1];
+    logic valid_a_out [SIZE] [SIZE-1];
     logic [7:0] b_out [SIZE-1] [SIZE];
-    logic [7:0] valid_b_out [SIZE-1] [SIZE];
+    logic valid_b_out [SIZE-1] [SIZE];
 
     /*generate corners of the matrix*/
     mac topLeft(
@@ -27,9 +27,9 @@ module systolic #(SIZE = 4) (
     );
     mac topRight(
         .a_in(a_out[0][SIZE-2]),
-        .valid_a(valid_a[0][SIZE-2]),
+        .valid_a(valid_a_out[0][SIZE-2]),
         .b_in(b_in[SIZE-1]),
-        .valid_b(valid_b_in[SIZE-1]),
+        .valid_b(valid_b[SIZE-1]),
         .a_out(),
         .valid_a_out(),
         .b_out(b_out[0][SIZE-1]),
@@ -41,7 +41,7 @@ module systolic #(SIZE = 4) (
         .a_in(a_in[SIZE-1]),
         .valid_a(valid_a[SIZE-1]),
         .b_in(b_out[SIZE-2][0]),
-        .valid_b_in(valid_b_out[SIZE-2][0]),
+        .valid_b(valid_b_out[SIZE-2][0]),
         .a_out(a_out[SIZE-1][0]),
         .valid_a_out(valid_a_out[SIZE-1][0]),
         .b_out(),
@@ -50,8 +50,8 @@ module systolic #(SIZE = 4) (
         .*
     );
     mac bottomRight(
-        .a_in(a_out[SIZE-2][SIZE-2]),
-        .valid_a(valid_a_out[SIZE-2][SIZE-2]),
+        .a_in(a_out[SIZE-1][SIZE-2]),
+        .valid_a(valid_a_out[SIZE-1][SIZE-2]),
         .b_in(b_out[SIZE-2][SIZE-1]),
         .valid_b(valid_b_out[SIZE-2][SIZE-1]),
         .a_out(),

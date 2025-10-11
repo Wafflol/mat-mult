@@ -3,11 +3,11 @@ module tb_systolic ();
     parameter IN_WIDTH = 8;
     parameter OUT_WIDTH = 32;
 
-    logic clk, reset, load_en, mult_en, acc_en, err;
+    logic clk, reset, err;
     logic [IN_WIDTH-1:0] a_in [SIZE];
-    logic [IN_WIDTH-1:0] valid_a [SIZE];
+    logic valid_a [SIZE];
     logic [IN_WIDTH-1:0] b_in [SIZE];
-    logic [IN_WIDTH-1:0] valid_b [SIZE];
+    logic valid_b [SIZE];
     logic [OUT_WIDTH-1:0] out [SIZE][SIZE];
 
     systolic #(.SIZE(SIZE)) dut (.*);
@@ -57,41 +57,57 @@ module tb_systolic ();
     */
     initial begin
         reset = 0;
-        acc_en = 0;
-        mult_en = 0;
-        load_en = 0;
+        valid_a = '{0, 0, 0};
+        valid_b = '{0, 0, 0};
         #10;
         my_checker('{'{0, 0, 0}, '{0, 0, 0}, '{0, 0, 0}});
 
         reset = 1;
-        acc_en = 1;
-        mult_en = 1;
-        load_en = 1;
+        valid_a = '{1, 0, 0};
+        valid_b = '{1, 0, 0};
         a_in = '{1, 0, 0};
         b_in = '{1, 0, 0};
-        #30;
+        #10;
         my_checker('{'{1, 0, 0}, '{0, 0, 0}, '{0, 0, 0}});
 
+        valid_a = '{1, 1, 0};
+        valid_b = '{1, 1, 0};
         a_in = '{2, 4, 0};
         b_in = '{4, 2, 0};
-        #30;
+        #10;
+        my_checker('{'{9, 2, 0}, '{4, 0, 0}, '{0, 0, 0}});
 
+        valid_a = '{1, 1, 1};
+        valid_b = '{1, 1, 1};
         a_in = '{3, 5, 7};
         b_in = '{7, 5, 3};
-        #30;
+        #10;
+        my_checker('{'{30, 12, 3}, '{24, 8, 0}, '{7, 0, 0}});
 
+        valid_a = '{0, 1, 1};
+        valid_b = '{0, 1, 1};
         a_in = '{0, 6, 8};
         b_in = '{0, 8, 6};
-        #30;
+        #10;
+        my_checker('{'{30, 36, 15}, '{66, 33, 12}, '{39, 14, 0}});
 
+        valid_a = '{0, 0, 1};
+        valid_b = '{0, 0, 1};
         a_in = '{0, 0, 9};
         b_in = '{0, 0, 9};
-        #30;
+        #10;
+        my_checker('{'{30, 36, 42}, '{66, 81, 42}, '{102, 54, 21}});
 
-        acc_en = 0;
-        mult_en = 0;
-        load_en = 0;
+        valid_a = '{0, 0, 0};
+        valid_b = '{0, 0, 0};
+        a_in = '{0, 0, 0};
+        b_in = '{0, 0, 0};
+        #10;
+        my_checker('{'{30, 36, 42}, '{66, 81, 96}, '{102, 126, 69}});
+
+
         #60;
+        my_checker('{'{30, 36, 42}, '{66, 81, 96}, '{102, 126, 150}});
 
         $stop;
     end
