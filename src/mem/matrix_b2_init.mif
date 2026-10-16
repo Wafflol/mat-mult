@@ -1,0 +1,15 @@
+WIDTH=16;
+DEPTH=32;
+ADDRESS_RADIX=DEC;
+DATA_RADIX=DEC;
+
+CONTENT BEGIN
+    0  : 3;
+    1  : 7;
+    2  : 11;
+    3  : 15;
+    4  : 4;
+    5  : 8;
+    6  : 12;
+    7  : 16;
+END;
