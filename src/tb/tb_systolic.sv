@@ -10,7 +10,7 @@ module tb_systolic ();
     logic valid_b [SIZE];
     logic [OUT_WIDTH-1:0] out [SIZE][SIZE];
 
-    systolic #(.SIZE(SIZE)) dut (.*);
+    systolic #(.SIZE(SIZE), .WIDTH(IN_WIDTH)) dut (.*);
 
     logic test [SIZE][SIZE] = '{'{1, 2, 3}, '{4, 5, 6}, '{7, 8, 9}};
 

@@ -10,7 +10,7 @@ module tb_1d_systolic ();
     logic valid_b [SIZE];
     logic [OUT_WIDTH-1:0] out [SIZE][SIZE];
 
-    systolic #(.SIZE(SIZE)) dut (.*);
+    systolic #(.SIZE(SIZE), .WIDTH(IN_WIDTH)) dut (.*);
 
     function static void printMat (logic [OUT_WIDTH-1:0] x [SIZE] [SIZE]);
         for (int i = 0; i < SIZE; i++) begin

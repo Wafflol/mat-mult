@@ -1,19 +1,19 @@
-module systolic #(SIZE = 4) (
+module systolic #(SIZE = 4, WIDTH = 16) (
     input logic clk, reset,
-    input logic [7:0] a_in [SIZE],
-    input logic [7:0] b_in [SIZE],
+    input logic [WIDTH-1:0] a_in [SIZE],
+    input logic [WIDTH-1:0] b_in [SIZE],
     input logic valid_a [SIZE],
     input logic valid_b [SIZE],
-    output logic [32-1:0] out [SIZE] [SIZE]
+    output logic [WIDTH*4-1:0] out [SIZE] [SIZE]
     );
 
-    logic [7:0] a_out [SIZE] [SIZE-1];
+    logic [WIDTH-1:0] a_out [SIZE] [SIZE-1];
     logic valid_a_out [SIZE] [SIZE-1];
-    logic [7:0] b_out [SIZE-1] [SIZE];
+    logic [WIDTH-1:0] b_out [SIZE-1] [SIZE];
     logic valid_b_out [SIZE-1] [SIZE];
 
     /*generate corners of the matrix*/
-    mac topLeft(
+    mac #(.WIDTH(WIDTH)) topLeft(
         .a_in(a_in[0]),
         .valid_a(valid_a[0]),
         .b_in(b_in[0]),
@@ -25,7 +25,7 @@ module systolic #(SIZE = 4) (
         .acc_out(out[0][0]),
         .*
     );
-    mac topRight(
+    mac #(.WIDTH(WIDTH)) topRight(
         .a_in(a_out[0][SIZE-2]),
         .valid_a(valid_a_out[0][SIZE-2]),
         .b_in(b_in[SIZE-1]),
@@ -37,7 +37,7 @@ module systolic #(SIZE = 4) (
         .acc_out(out[0][SIZE-1]),
         .*
     );
-    mac bottomLeft(
+    mac #(.WIDTH(WIDTH)) bottomLeft(
         .a_in(a_in[SIZE-1]),
         .valid_a(valid_a[SIZE-1]),
         .b_in(b_out[SIZE-2][0]),
@@ -49,7 +49,7 @@ module systolic #(SIZE = 4) (
         .acc_out(out[SIZE-1][0]),
         .*
     );
-    mac bottomRight(
+    mac #(.WIDTH(WIDTH)) bottomRight(
         .a_in(a_out[SIZE-1][SIZE-2]),
         .valid_a(valid_a_out[SIZE-1][SIZE-2]),
         .b_in(b_out[SIZE-2][SIZE-1]),
@@ -66,7 +66,7 @@ module systolic #(SIZE = 4) (
     generate
         /* generate first and last row (excluding first MAC and last) */
         for (i = 1; i < SIZE-1; i = i + 1) begin : g_systolic_row
-            mac row0MAC(
+            mac #(.WIDTH(WIDTH)) row0MAC(
                 .a_in(a_out[0][i-1]),
                 .valid_a(valid_a_out[0][i-1]),
                 .b_in(b_in[i]),
@@ -78,7 +78,7 @@ module systolic #(SIZE = 4) (
                 .acc_out(out[0][i]),
                 .*
             );
-            mac rowLastMAC(
+            mac #(.WIDTH(WIDTH)) rowLastMAC(
                 .a_in(a_out[SIZE-1][i-1]),
                 .valid_a(valid_a_out[SIZE-1][i-1]),
                 .b_in(b_out[SIZE-2][i]),
@@ -93,7 +93,7 @@ module systolic #(SIZE = 4) (
         end
         /* generate first and last column (excluding first and last instance of each)*/
         for (j = 1; j < SIZE-1; j = j + 1) begin : g_systolic_col
-            mac col0MAC(
+            mac #(.WIDTH(WIDTH)) col0MAC(
                 .a_in(a_in[j]),
                 .valid_a(valid_a[j]),
                 .b_in(b_out[j-1][0]),
@@ -105,7 +105,7 @@ module systolic #(SIZE = 4) (
                 .acc_out(out[j][0]),
                 .*
             );
-            mac colLastMAC(
+            mac #(.WIDTH(WIDTH)) colLastMAC(
                 .a_in(a_out[j][SIZE-2]),
                 .valid_a(valid_a_out[j][SIZE-2]),
                 .b_in(b_out[j-1][SIZE-1]),
@@ -122,7 +122,7 @@ module systolic #(SIZE = 4) (
         /* generate everything in the center (not along the edges) */
         for (k = 1; k < SIZE - 1; k = k + 1) begin : g_center_row
             for (l = 1; l < SIZE - 1; l = l + 1) begin : g_center_col
-                mac mainSystolic(
+                mac #(.WIDTH(WIDTH)) mainSystolic(
                     .a_in(a_out[k][l-1]),
                     .valid_a(valid_a_out[k][l-1]),
                     .b_in(b_out[k-1][l]),
